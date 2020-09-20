@@ -2518,8 +2518,12 @@ function QRCodeDataBlockReader(blocks, version, numErrorCorrectionCode) {
 qrcode.d = function (url) {
     return new Promise((resolve, reject) => {
         qrcode.decode(url)
-        qrcode.callback = function (str) {
-            resolve(str)
+        qrcode.callback = function (response) {
+            if (response === "error decoding QR Code") {
+                reject(response)
+            } else {
+                resolve(response)
+            }
         }
     })
 }
